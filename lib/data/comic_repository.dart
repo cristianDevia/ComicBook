@@ -21,7 +21,7 @@ class ComicRepository {
       Map data = jsonDecode(response.body);
       List result = data["results"].map((json) {
         return Comic.fromMap(json);
-      });
+      }).toList();
       return result;
     } else {
       return null;

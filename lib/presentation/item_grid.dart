@@ -1,5 +1,6 @@
 import 'package:comic_book/presentation/comics_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ItemGrid extends StatelessWidget {
   final String comicImage;
@@ -16,8 +17,8 @@ class ItemGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imgComic = Container(
-      width: 80.0,
-      height: 80.0,
+      width: Get.width * 0.5,
+      height: Get.height * 0.15,
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           image: DecorationImage(image: NetworkImage(comicImage))),
@@ -25,10 +26,20 @@ class ItemGrid extends StatelessWidget {
 
     final description = Container(
         child: Column(
-      children: <Widget>[Text(comicDate), Text(comicName), Text(comicIssue)],
+      children: <Widget>[
+        Text(
+          comicName == "" ? "No name" : comicName,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+        ),
+        Text(comicIssue),
+        Text(comicDate),
+      ],
     ));
 
     final comic = Container(
+      height: Get.height * 0.5,
       child: Column(
         children: [imgComic, description],
       ),
