@@ -1,4 +1,6 @@
 import 'package:comic_book/presentation/comics_controller.dart';
+import 'package:comic_book/presentation/comics_detail_screen.dart';
+import 'package:comic_book/presentation/item_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,9 +10,7 @@ class ComicsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Comic Book"),
-        ),
+        appBar: AppBar(title: const Text("Comic Book"), centerTitle: true),
         body: DefaultTabController(
           length: 2,
           child: Column(
@@ -40,7 +40,7 @@ class ComicsScreen extends StatelessWidget {
                         Expanded(
                           child: GridView.custom(
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     childAspectRatio: 0.9,
                                     crossAxisSpacing: 8.0),
@@ -50,7 +50,30 @@ class ComicsScreen extends StatelessWidget {
                           ),
                         )
                       ]),
-                      Container(color: Colors.red)
+                      Container(
+                          child: Obx(
+                        () => ListView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: comicsController.comics.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                  onTap: () =>
+                                      Get.to(() => ComicsDetailScreen()),
+                                  child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10.0),
+                                      child: ItemList(
+                                          comicImage: comicsController
+                                              .comics[index].comicImage,
+                                          comicDate: comicsController
+                                              .comics[index].comicDate,
+                                          comicName: comicsController
+                                              .comics[index].comicName,
+                                          comicIssue: comicsController
+                                              .comics[index].comicIssue)));
+                            }),
+                      ))
                     ],
                   ))
                 ],
