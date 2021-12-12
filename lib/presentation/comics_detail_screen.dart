@@ -20,45 +20,67 @@ class ComicsDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final imgComic = Container(
       width: Get.width * 0.5,
-      height: Get.height * 0.15,
+      height: Get.height * 0.8,
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          image: DecorationImage(image: NetworkImage(detailImage))),
+          image: DecorationImage(
+            image: NetworkImage(detailImage),
+            fit: BoxFit.fill,
+          )),
     );
 
     final characters = Container(
-        height: Get.height * 0.2,
-        width: Get.width * 0.3,
-        child: Column(
-          children: [
-            Text(
-              "Character",
-              style: TextStyle(),
-            ),
-            detailCharacterCredits.length == 0
-                ? Text("No characters")
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: detailCharacterCredits.length,
-                    itemBuilder: (context, index) {
-                      return Text(detailCharacterCredits[index]['name']);
-                    })
-          ],
-        ));
+      height: Get.height * 0.2,
+      width: Get.width * 0.3,
+      child: Column(
+        children: [
+          Container(
+              width: Get.width * 0.3,
+              child: const Text(
+                "Character",
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide(width: 2)))),
+          detailCharacterCredits.length == 0
+              ? Text("No characters")
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: detailCharacterCredits.length,
+                  itemBuilder: (context, index) {
+                    return Text(
+                      detailCharacterCredits[index]['name'],
+                    );
+                  }),
+        ],
+      ),
+    );
 
     final team = Container(
         height: Get.height * 0.2,
         width: Get.width * 0.3,
-        child: detailTeamCredits.length == 0
-            ? Text("No Team")
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: detailTeamCredits.length,
-                itemBuilder: (context, index) {
-                  return Text(detailTeamCredits[index]['name']);
-                }));
+        child: Column(children: [
+          Container(
+              width: Get.width * 0.3,
+              child: const Text(
+                "Team",
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide(width: 2)))),
+          detailTeamCredits.length == 0
+              ? Text("No Team")
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: detailTeamCredits.length,
+                  itemBuilder: (context, index) {
+                    return Text(detailTeamCredits[index]['name']);
+                  })
+        ]));
 
     final location = Container(
         height: Get.height * 0.2,
@@ -91,14 +113,16 @@ class ComicsDetailScreen extends StatelessWidget {
         title: const Text("Comics Details"),
       ),
       body: Container(
+          padding: EdgeInsets.all(20),
           child: Row(
-        children: <Widget>[
-          Column(
-            children: [characters, team, location, concepts],
-          ),
-          imgComic
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: [characters, team, location, concepts],
+              ),
+              imgComic
+            ],
+          )),
     );
 
     return details;
