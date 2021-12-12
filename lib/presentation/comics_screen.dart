@@ -22,13 +22,13 @@ class ComicsScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(
                             top: Get.height * 0.004, bottom: Get.height * 0.01),
-                        child: Text("Grid",
+                        child: Text("List",
                             style: TextStyle(color: Colors.black))),
                     Padding(
                         padding: EdgeInsets.only(
                             top: Get.height * 0.004, bottom: Get.height * 0.01),
                         child:
-                            Text("List", style: TextStyle(color: Colors.black)))
+                            Text("Grid", style: TextStyle(color: Colors.black)))
                   ]),
               Flexible(
                   child: Column(
@@ -36,6 +36,31 @@ class ComicsScreen extends StatelessWidget {
                   Flexible(
                       child: TabBarView(
                     children: [
+                      Container(
+                          child: Obx(
+                        () => ListView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: comicsController.comics.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                  onTap: () => comicsController.getDetails(
+                                      comicsController
+                                          .comics[index].apiDetailUrl),
+                                  child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10.0),
+                                      child: ItemList(
+                                          comicImage: comicsController
+                                              .comics[index].comicImage,
+                                          comicDate: comicsController
+                                              .comics[index].comicDate,
+                                          comicName: comicsController
+                                              .comics[index].comicName,
+                                          comicIssue: comicsController
+                                              .comics[index].comicIssue)));
+                            }),
+                      )),
                       Column(children: [
                         Expanded(
                           child: GridView.custom(
@@ -50,30 +75,6 @@ class ComicsScreen extends StatelessWidget {
                           ),
                         )
                       ]),
-                      Container(
-                          child: Obx(
-                        () => ListView.builder(
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: comicsController.comics.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                  onTap: () =>
-                                      Get.to(() => ComicsDetailScreen()),
-                                  child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 10.0),
-                                      child: ItemList(
-                                          comicImage: comicsController
-                                              .comics[index].comicImage,
-                                          comicDate: comicsController
-                                              .comics[index].comicDate,
-                                          comicName: comicsController
-                                              .comics[index].comicName,
-                                          comicIssue: comicsController
-                                              .comics[index].comicIssue)));
-                            }),
-                      ))
                     ],
                   ))
                 ],
