@@ -26,7 +26,8 @@ class ComicsDetailScreen extends StatelessWidget {
           image: DecorationImage(
             image: NetworkImage(detailImage),
             fit: BoxFit.fill,
-          )),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
     );
 
     final characters = Container(
@@ -152,9 +153,7 @@ class ComicsDetailScreen extends StatelessWidget {
         ));
 
     final details = Scaffold(
-      appBar: AppBar(
-        title: const Text("Comics Details"),
-      ),
+      appBar: AppBar(title: const Text("Comics Details"), centerTitle: true),
       body: Container(
           padding: const EdgeInsets.all(20),
           child: Row(
